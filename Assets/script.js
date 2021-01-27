@@ -1,7 +1,11 @@
+//set ready method to ensure the document is fully loaded before execute any function
 $(document).ready(function () {
-
+    //set variable for luxon 
     var DateTime = luxon.DateTime.local().setZone("America/New_york");
     var currentHour = DateTime.toFormat("HH");
+
+    console.log(currentHour);
+
 
     var currentDay = DateTime.toLocaleString({
         weekday: 'long',
@@ -12,10 +16,10 @@ $(document).ready(function () {
         minute: 'numeric',
 
     });
-
+    //set day and time to html
     $("#currentDay").text(currentDay);
 
-    var hour = [
+    var timeSlot = [
 
         {
             hourDisplay: "09:00 AM",
@@ -54,20 +58,21 @@ $(document).ready(function () {
             hour: 17
         },
     ];
-    //var hour = [09, 10, 11, 12, 13, 14, 15, 16, 17 ]
-
+   
+    //added class to container
     $(".container").addClass("time-block");
 
-     hour.forEach(function (hour) {
+    //create schedule with row , txt input and save button
+    timeSlot.forEach(function (timeSlot) {
 
-        var row = $("<div>").addClass("row");
+        var row = $("<div>").addClass("row").attr("id", timeSlot.hour);
         $(".container").append(row);
 
         var time = $("<div>").addClass("col-1 hour");
-        time.text(hour.hourDisplay);
+        time.text(timeSlot.hourDisplay);
         row.append(time);
 
-        var textInput = $("<input>").addClass("textArea col-10 description");
+        var textInput = $("<input>").addClass("textArea col-10 description ");
         row.append(textInput);
 
         var saveBtn = $("<button>").addClass("saveBtn col-1");
@@ -76,21 +81,37 @@ $(document).ready(function () {
         var btnImg = $("<i>").addClass("far fa-save fa-lg");
         saveBtn.append(btnImg);
 
-    });
-
-
-
-        if (hour.hour === currentHour) {
-            textArea.addClass("present");
-        } else if (hour.hour < currentHour) {
-            textArea.addClass("past");
-        } else {
-            textArea.addClass("future");
+        //set time to color code past, present , future
+        if (timeSlot.hour > currentHour) {
+            $(textInput).addClass("future")
+        }
+        else if (timeSlot.hour < currentHour) {
+            $(textInput).addClass("past")
         }
 
+        else  {
+            $(textInput).addClass("present")
+        }
+    });
     
+    //set click event to save to local storage
+    $("button").on("click", function(){
+       
+        var value = $(this).siblings(".textArea").val().trim()
+        var hour = $(this).parent().attr("id")
+        localStorage.setItem(hour, value);
 
+    })
 
-
+    //get event and input to textArea
+    $("#9 .textArea").val(localStorage.getItem("9"))
+    $("#10 .textArea").val(localStorage.getItem("10"))
+    $("#11 .textArea").val(localStorage.getItem("11"))
+    $("#12 .textArea").val(localStorage.getItem("12"))
+    $("#13 .textArea").val(localStorage.getItem("13"))
+    $("#14 .textArea").val(localStorage.getItem("14"))
+    $("#15 .textArea").val(localStorage.getItem("15"))
+    $("#16 .textArea").val(localStorage.getItem("16"))
+    $("#17 .textArea").val(localStorage.getItem("17"))
 
 })
