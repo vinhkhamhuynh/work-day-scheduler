@@ -10,7 +10,7 @@ Create a simple day scheduler using jQuery with css along with Luxon to work wit
 
 The following screenshot display the application functionality:
 
-![full-screenshot-of-work-day-scheduler](./assets/scheduler.JPG)
+![full-screenshot-of-work-day-scheduler](assets/scheduler.JPG)
 
 
 ### Creation Process
